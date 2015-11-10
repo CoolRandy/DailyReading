@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="color_ebebeb">#EBEBEB</color>
+    <color name="light_blue">#28C8DC</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_1e3e4a">#1e3e4a</color>
+
+    <!-- 自定义color-->
+    <!--toolbar-->
+    <color name="light_toolbar">@android:color/holo_blue_dark</color>
+    <color name="dark_toolbar">@android:color/black</color>
+    <color name="dark_selector_drawable">#FF333333</color>
+    <color name="light_news_topic">#ff666666</color>
+    <color name="dark_news_topic">#CCFFFFFF</color>
+    <color name="light_news_item">#FFF0F0F0</color>
+    <color name="dark_news_item">#DD000000</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="white">#ffffffff</color>
+    <color name="gray">#fff6f6f6</color>
+    <color name="gray_normal">#ff777777</color>
+    <color name="black_color">#ff000000</color>
+    <!--menu color-->
+    <color name="light_menu_header">@android:color/holo_blue_dark</color>
+    <color name="dark_menu_header">@android:color/black</color>
+    <!--menu text color-->
+    <color name="light_menu_header_tv">@android:color/white</color>
+    <color name="dark_menu_header_tv">#CCFFFFFF</color>
+    <color name="light_menu_index_background">#FFF0F0F0</color>
+    <color name="dark_menu_index_background">#FF111111</color>
+    <color name="light_menu_listview_background">@android:color/white</color>
+    <color name="dark_menu_listview_background">#FF222222</color>
+    <color name="light_menu_listview_textcolor">#FF000000</color>
+    <color name="dark_menu_listview_textcolor">@android:color/darker_gray</color>
+
+    <color name="snackbar_background_color">#323232</color>
+    <!--侧边栏列表项点击后的颜色-->
+    <color name="clicked_tv_textcolor">@android:color/darker_gray</color>
+</resources>

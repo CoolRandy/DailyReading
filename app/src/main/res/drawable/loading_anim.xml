@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--这里采用一帧一帧的将图片连续成动画效果 仿照时光网的加载动画-->
+<!--这里采用的是帧动画，即提供了一种逐帧播放图片的动画方式，播放事先做好的图像，与gif图片原理类似，就像是在放电影一样
+ 这需要事先提供每一帧图片-->
+<!--这里animation-list提供一个动画列表，其中存放的图片即为每一帧显示的动画 oneshot 表示动画是否只执行一次-->
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@mipmap/loading0001" android:duration="30" />  <!--持续时间都是30ms-->
+    <item android:drawable="@mipmap/loading0002" android:duration="30" />
+    <item android:drawable="@mipmap/loading0003" android:duration="30" />
+    <item android:drawable="@mipmap/loading0004" android:duration="30" />
+    <item android:drawable="@mipmap/loading0005" android:duration="30" />
+    <item android:drawable="@mipmap/loading0006" android:duration="30" />
+    <item android:drawable="@mipmap/loading0007" android:duration="30" />
+    <item android:drawable="@mipmap/loading0008" android:duration="30" />
+    <item android:drawable="@mipmap/loading0009" android:duration="30" />
+    <item android:drawable="@mipmap/loading0010" android:duration="30" />
+    <item android:drawable="@mipmap/loading0011" android:duration="30" />
+    <item android:drawable="@mipmap/loading0012" android:duration="30" />
+    <item android:drawable="@mipmap/loading0013" android:duration="30" />
+    <item android:drawable="@mipmap/loading0014" android:duration="30" />
+    <item android:drawable="@mipmap/loading0015" android:duration="30" />
+    <item android:drawable="@mipmap/loading0016" android:duration="30" />
+    <item android:drawable="@mipmap/loading0017" android:duration="30" />
+    <item android:drawable="@mipmap/loading0018" android:duration="30" />
+    <item android:drawable="@mipmap/loading0019" android:duration="30" />
+    <item android:drawable="@mipmap/loading0020" android:duration="30" />
+    <item android:drawable="@mipmap/loading0021" android:duration="30" />
+    <item android:drawable="@mipmap/loading0022" android:duration="30" />
+    <item android:drawable="@mipmap/loading0023" android:duration="30" />
+    <item android:drawable="@mipmap/loading0024" android:duration="30" />
+    <item android:drawable="@mipmap/loading0025" android:duration="30" />
+    <item android:drawable="@mipmap/loading0026" android:duration="30" />
+</animation-list>

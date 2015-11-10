@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--注意这里的属性名不可以用rippleView-->
+<resources>
+    <declare-styleable name="RippleView">
+        <attr name="rippleColor1" format="color"/>
+        <attr name="alphaFactor" format="float"/>
+        <attr name="hover" format="boolean"/>
+    </declare-styleable>
+
+    <!--自定义ToolBar样式-->
+    <style name="MyToolbarTextStyle" parent="@android:style/TextAppearance.DeviceDefault">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--自定义DoubleImageView属性-->
+    <declare-styleable name="DoubleImageView">
+        <attr name="android:drawableLeft"/>
+        <attr name="android:drawableRight"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="android:spacing"/>
+    </declare-styleable>
+
+    <!--自定义BoxGridLayout属性-->
+    <declare-styleable name="BoxGridLayout">
+        <attr name="separatorWidth" format="dimension" />
+        <attr name="separatorColor" format="color" />
+        <attr name="numColumns" format="integer" />
+    </declare-styleable>
+
+
+    <!--NumberProgressBar-->
+    <declare-styleable name="NumberProgressBar">
+        <attr name="progress_current" format="integer"/>
+        <attr name="progress_max" format="integer"/>
+
+        <attr name="progress_unreached_color" format="color"/>
+        <attr name="progress_reached_color" format="color"/>
+
+        <attr name="progress_reached_bar_height" format="dimension"/>
+        <attr name="progress_unreached_bar_height" format="dimension"/>
+
+        <attr name="progress_text_size" format="dimension"/>
+        <attr name="progress_text_color" format="color"/>
+
+        <attr name="progress_text_offset" format="dimension"/>
+        <attr name="progress_text_visiblity" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="Themes">
+        <attr name="numberProgressBarStyle" format="reference"/>
+    </declare-styleable>
+
+
+</resources>

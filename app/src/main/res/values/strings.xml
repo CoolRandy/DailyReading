@@ -1,0 +1,9 @@
+<resources>
+
+    <!--将字符串都定义在此处是良好的工程习惯，便于国际化-->
+    <string name="app_name">DailyReading</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="day_mode">日间模式</string>
+    <string name="night_mode">夜间模式</string>
+</resources>

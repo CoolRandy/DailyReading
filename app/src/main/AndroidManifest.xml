@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.randy.dailyreading">
+
+    <!--访问网络以及读写权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.write_external_storage"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_108"
+        android:label="@string/app_name"
+        android:name=".frame.MyApplication"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:label="@string/app_name"
+            android:name=".activity.CustomViewActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!--<activity android:name=".activity.SplashActivity"/>-->
+        <activity android:label="@string/app_name"
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:label="@string/app_name"
+            android:name=".activity.MainContentActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:label="@string/app_name"
+            android:name=".activity.LatestContentActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.OtherNewsActivtiy"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.TestActivity"
+            android:label="@string/app_name"/>
+        <activity android:name=".activity.SplashActivity"/>
+        <!--ShareSDK-->
+        <!--这里要注意app依赖于onekeyshare library,而onekeyshare则是依赖于sharesdk-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <!--这里腾讯开放平台的APPid要改为申请的-->
+            <intent-filter>
+                <data android:scheme="tencent1104646053" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!--微信分享回调-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+    <!--<meta-data android:name="UMENG_APPKEY" android:value="56263d8fe0f55ab7b0000657"/>
+        &lt;!&ndash;分享编辑页&ndash;&gt;
+        <activity
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:noHistory="true" android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:name=".wxapi.WXEntryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>-->
+    </application>
+</manifest>

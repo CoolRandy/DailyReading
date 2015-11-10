@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd";>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language=javascript>
+function load_night() 
+{
+	
+	document.bgColor="#000000"
+	var fontColor = document.getElementById("font");
+	if (!fontColor) {
+	return;
+	}
+	fontColor.style.color="white"
+}
+</script>
+
+<script language="javascript">
+	function load_day(){
+		document.bgColor="#ffffff"
+		var fontColor = document.getElementById("font");
+	if (!fontColor) {
+		return;
+		}
+	fontColor.style.color="black"
+	}
+</script>
+<!-- <head>
+<title>webView测试夜间模式</title>
+</head>
+
+<body LEFTMARGIN="10" VLINK="#8000FF" BGCOLOR="#FFFFFF" ALINK="#FF0000" LINK="#0000FF"
+TOPMARGIN="10" TEXT="#666666">
+	<div id="font">小巫见大巫，小巫见大巫</div>
+	</br>
+	<button type="button" onClick="load_night()">夜间模式</button>
+	<button type="button" onClick="load_day()">白天模式</button>
+</body> -->
+</html>
