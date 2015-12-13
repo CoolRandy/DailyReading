@@ -82,6 +82,7 @@ public class NetworkDispatcher extends Thread {
     @Override
     public void run() {
         //设置线程优先级
+
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
         Request<?> request;
         while (true) {
