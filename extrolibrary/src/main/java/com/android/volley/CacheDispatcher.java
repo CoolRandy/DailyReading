@@ -94,11 +94,11 @@ public class CacheDispatcher extends Thread {
             // release previous request object to avoid leaking request object when mQueue is drained.
             request = null;
             try {
-                // Take a request from the queue.
+                // Take a request from the queue. 从缓存队列中取出一个请求
                 request = mCacheQueue.take();
             } catch (InterruptedException e) {
                 // We may have been interrupted because it was time to quit.
-                if (mQuit) {
+                if (mQuit) {//请求已取消，结束返回
                     return;
                 }
                 continue;

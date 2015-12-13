@@ -24,6 +24,9 @@ import android.os.Build;
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClients;
+
 import java.io.File;
 
 /**
@@ -41,7 +44,10 @@ public class Volley {
      * Creates a default instance of the worker pool and calls {@link RequestQueue#start()} on it.
      * You may set a maximum size of the disk cache in bytes.
      * 创建一个默认的请求队列，可以设置一个最大字节的硬盘缓存
-     *
+     * 分析这个方法可以看到：RequestQueue、HttpStack、Network、Cache都可以由我们自定义来构建请求队列，可扩展性非常强
+     * 这里涉及到HttpClient和HttpURLConnection的选择：
+     * 在 Froyo(2.2) 之前，HttpURLConnection 有个重大 Bug，调用 close() 函数会影响连接池，导致连接复用失效，所以在 Froyo 之前使用 HttpURLConnection 需要关闭 keepAlive
+     * Gingerbread(2.3) HttpURLConnection 默认开启了 gzip 压缩，提高了 HTTPS 的性能，Ice Cream Sandwich(4.0) HttpURLConnection 支持了请求结果缓存
      * @param context A {@link Context} to use for creating the cache dir.
      * @param stack An {@link HttpStack} to use for the network, or null for default.
      * @param maxDiskCacheBytes the maximum size of the disk cache, in bytes. Use -1 for default size.
@@ -66,7 +72,13 @@ public class Volley {
                 // Prior to Gingerbread, HttpUrlConnection was unreliable.
                 // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html
                 //AndroidHttpClient在android5.0以后已经被移除了,所以只考虑使用HttpURLConnection对应的HurlStack
-                //stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+                //TODO 当然这里可以采用HttpClient来替代AndroidHttpClient  需要添加apache的httpclient的jar包
+                /*HttpClient httpClient = new DefaultHttpClient();
+                httpClient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, userAgent);*/
+                //TODO With httpcomponents 4.3 you should use the client builder to set the user agent
+                HttpClient httpClient = HttpClients.custom().setUserAgent(userAgent).build();
+                stack = new HttpClientStack(httpClient);
+//                stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
             }
         }
         Network network = new BasicNetwork(stack);
@@ -75,7 +87,7 @@ public class Volley {
         RequestQueue queue;
         if (maxDiskCacheBytes <= -1)
         {
-        	// No maximum size specified 没有指定最大银盘缓存大小
+        	// No maximum size specified 没有指定最大硬盘缓存大小
         	queue = new RequestQueue(new DiskBasedCache(cacheDir), network);
         }
         else

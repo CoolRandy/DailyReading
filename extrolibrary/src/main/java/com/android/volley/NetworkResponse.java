@@ -24,16 +24,17 @@ import java.util.Map;
 
 /**
  * Data and headers returned from {@link Network#performRequest(Request)}.
+ * 执行网络请求返回的数据和头部
  */
 public class NetworkResponse implements Serializable{
     private static final long serialVersionUID = -20150728102000L;
 
     /**
-     * Creates a new network response.
+     * Creates a new network response.  创建一个网络响应
      * @param statusCode the HTTP status code
      * @param data Response body
      * @param headers Headers returned with this response, or null for none
-     * @param notModified True if the server returned a 304 and the data was already in cache
+     * @param notModified True if the server returned a 304 and the data was already in cache  请求数据对比缓存
      * @param networkTimeMs Round-trip network time to receive network response
      */
     public NetworkResponse(int statusCode, byte[] data, Map<String, String> headers,

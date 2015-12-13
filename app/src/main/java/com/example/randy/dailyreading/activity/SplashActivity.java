@@ -46,6 +46,7 @@ public class SplashActivity extends Activity {
     protected ImageLoader imageLoader = ImageLoader.getInstance();
 
     public RequestQueue mRequestQueue;
+    
 
     //网络标志位
     private boolean netIsAvaiable;

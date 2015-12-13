@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+
 import com.android.volley.VolleyLog.MarkerLog;
 
 import java.io.UnsupportedEncodingException;
@@ -33,6 +34,7 @@ import java.util.Map;
  * 所有网络请求的基类  抽象类
  * Volley 支持 8 种 Http 请求方式 GET, POST, PUT, DELETE, HEAD, OPTIONS, TRACE, PATCH
  * Request 类中包含了请求 url，请求请求方式，请求 Header，请求 Body，请求的优先级等信息
+ * 自定义子类必须重写其中的两个抽象方法
  *
  * @param <T> The type of parsed response this request expects.
  */
@@ -40,6 +42,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
     /**
      * Default encoding for POST or PUT parameters. See {@link #getParamsEncoding()}.
+     * 默认参数编码
      */
     private static final String DEFAULT_PARAMS_ENCODING = "UTF-8";
 
@@ -76,38 +79,39 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     /** The unique identifier of the request */
     private String mIdentifier;
 
-    /** Default tag for {@link TrafficStats}. */
+    /** Default tag for {@link TrafficStats}. TrafficStats代表流量监控类*/
     private final int mDefaultTrafficStatsTag;
 
     /** Listener interface for errors. */
     private Response.ErrorListener mErrorListener;
 
-    /** Sequence number of this request, used to enforce FIFO ordering. */
+    /** Sequence number of this request, used to enforce FIFO ordering. 请求的序列号，用来强制FIFO排序*/
     private Integer mSequence;
 
-    /** The request queue this request is associated with. */
+    /** The request queue this request is associated with. 请求所在的请求队列*/
     private RequestQueue mRequestQueue;
 
-    /** Whether or not responses to this request should be cached. */
+    /** Whether or not responses to this request should be cached. 是否缓存*/
     private boolean mShouldCache = true;
 
-    /** Whether or not this request has been canceled. */
+    /** Whether or not this request has been canceled. 请求是否已被取消*/
     private boolean mCanceled = false;
 
-    /** Whether or not a response has been delivered for this request yet. */
+    /** Whether or not a response has been delivered for this request yet.请求的响应是否已分发 */
     private boolean mResponseDelivered = false;
 
-    /** The retry policy for this request. */
+    /** The retry policy for this request. 请求的重试策略*/
     private RetryPolicy mRetryPolicy;
 
     /**
      * When a request can be retrieved from cache but must be refreshed from
      * the network, the cache entry will be stored here so that in the event of
      * a "Not Modified" response, we can be sure it hasn't been evicted from cache.
+     * 保证缓存没有过期
      */
     private Cache.Entry mCacheEntry = null;
 
-    /** An opaque token tagging this request; used for bulk cancellation. */
+    /** An opaque token tagging this request; used for bulk cancellation. 请求的令牌标记，用于批量取消*/
     private Object mTag;
 
     /**
@@ -115,6 +119,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * the normal response listener is not provided here as delivery of responses
      * is provided by subclasses, who have a better idea of how to deliver an
      * already-parsed response.
+     * 用所给的url和error listener创建一个新的请求  normal listener由子类实现请求分发
      *
      * @deprecated Use {@link #Request(int, String, com.android.volley.Response.ErrorListener)}.
      */
@@ -186,7 +191,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         if (!TextUtils.isEmpty(url)) {
             Uri uri = Uri.parse(url);
             if (uri != null) {
-                String host = uri.getHost();
+                String host = uri.getHost();//域名（主机名），具有唯一性，适合取其hashcode作为流量统计标志
                 if (host != null) {
                     return host.hashCode();
                 }
@@ -354,9 +359,13 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * Returns a list of extra HTTP headers to go along with this request. Can
      * throw {@link AuthFailureError} as authentication may be required to
      * provide these values.
+     * 如果自定义的Request子类希望自定义User-Agent可以重写该方法
      * @throws AuthFailureError In the event of auth failure
      */
     public Map<String, String> getHeaders() throws AuthFailureError {
+        //self defined user agent
+//        Map<String, String> headerMap = new HashMap<String, String>();
+//        headerMap.put("User-Agent", "android-open-project-analysis/1.0");
         return Collections.emptyMap();
     }
 
@@ -477,6 +486,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
     /**
      * Converts <code>params</code> into an application/x-www-form-urlencoded encoded string.
+     * 对参数进行编码
      */
     private byte[] encodeParameters(Map<String, String> params, String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
@@ -564,7 +574,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * and return an appropriate response type. This method will be
      * called from a worker thread.  The response will not be delivered
      * if you return null.
-     * 子类必须重写该方法，将网络返回的原声字节内容转换为合适的类型，该方法会在工作线程中调用
+     * 子类必须重写该方法，将网络返回的原声字节内容转换为合适的类型，该方法会在工作线程中调用  解析数据
      * @param response Response from the network
      * @return The parsed response, or null in the case of an error
      */

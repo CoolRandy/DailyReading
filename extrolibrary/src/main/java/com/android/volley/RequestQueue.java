@@ -71,11 +71,11 @@ public class RequestQueue {
      */
     private final Set<Request<?>> mCurrentRequests = new HashSet<Request<?>>();
 
-    /** The cache triage queue. */
+    /** The cache triage queue. 缓存队列*/
     private final PriorityBlockingQueue<Request<?>> mCacheQueue =
         new PriorityBlockingQueue<Request<?>>();
 
-    /** The queue of requests that are actually going out to the network. */
+    /** The queue of requests that are actually going out to the network. 网络队列*/
     private final PriorityBlockingQueue<Request<?>> mNetworkQueue =
         new PriorityBlockingQueue<Request<?>>();
 
@@ -146,7 +146,7 @@ public class RequestQueue {
      */
     public void start() {
         stop();  // Make sure any currently running dispatchers are stopped.
-        // Create the cache dispatcher and start it.  创建缓存分发，并启动它
+        // Create the cache dispatcher and start it.  创建缓存分发调度线程，并启动它
         mCacheDispatcher = new CacheDispatcher(mCacheQueue, mNetworkQueue, mCache, mDelivery);
         mCacheDispatcher.start();
 
@@ -200,7 +200,7 @@ public class RequestQueue {
      * Cancels all requests in this queue for which the given filter applies.
      * @param filter The filtering function to use
      */
-    public void cancelAll(RequestFilter filter) {
+    public void cancelAll(RequestFilter filter) {//采用自定义的过滤器来过滤请求
         synchronized (mCurrentRequests) {
             for (Request<?> request : mCurrentRequests) {
                 if (filter.apply(request)) {
@@ -227,14 +227,14 @@ public class RequestQueue {
     }
 
     /**
-     * Adds a Request to the dispatch queue.
+     * Adds a Request to the dispatch queue. 添加请求进入分发调度队列
      * @param request The request to service
      * @return The passed-in request
      */
     public <T> Request<T> add(Request<T> request) {
         // Tag the request as belonging to this queue and add it to the set of current requests.
         request.setRequestQueue(this);
-        synchronized (mCurrentRequests) {
+        synchronized (mCurrentRequests) {//加锁，避免竞争阻塞
             mCurrentRequests.add(request);
         }
 
@@ -254,7 +254,7 @@ public class RequestQueue {
         synchronized (mWaitingRequests) {
             String cacheKey = request.getCacheKey();
             if (mWaitingRequests.containsKey(cacheKey)) {
-                // There is already a request in flight. Queue up.
+                // There is already a request in flight. Queue up.  创建一个容纳相同请求的队列
                 Queue<Request<?>> stagedRequests = mWaitingRequests.get(cacheKey);
                 if (stagedRequests == null) {
                     stagedRequests = new LinkedList<Request<?>>();
