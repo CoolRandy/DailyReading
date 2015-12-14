@@ -34,8 +34,8 @@ public class NetworkResponse implements Serializable{
      * @param statusCode the HTTP status code
      * @param data Response body
      * @param headers Headers returned with this response, or null for none
-     * @param notModified True if the server returned a 304 and the data was already in cache  请求数据对比缓存
-     * @param networkTimeMs Round-trip network time to receive network response
+     * @param notModified True if the server returned a 304 and the data was already in cache  请求数据对比缓存 表示是否为 304 响应
+     * @param networkTimeMs Round-trip network time to receive network response 请求耗时
      */
     public NetworkResponse(int statusCode, byte[] data, Map<String, String> headers,
             boolean notModified, long networkTimeMs) {

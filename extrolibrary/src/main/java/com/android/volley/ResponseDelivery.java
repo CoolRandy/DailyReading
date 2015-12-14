@@ -16,6 +16,10 @@
 
 package com.android.volley;
 
+/**
+ * 请求结果的传输接口，用于传递请求结果或者请求错误
+ */
+
 public interface ResponseDelivery {
     /**
      * Parses a response from the network or cache and delivers it.

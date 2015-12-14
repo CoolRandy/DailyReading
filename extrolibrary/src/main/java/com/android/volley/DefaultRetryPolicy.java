@@ -87,6 +87,10 @@ public class DefaultRetryPolicy implements RetryPolicy {
 
     /**
      * Prepares for the next retry by applying a backoff to the timeout.
+     * 主要通过在 retry(…) 函数中判断重试次数是否达到上限确定是否继续重试。
+     * 其中mCurrentRetryCount变量表示已经重试次数。
+     * mBackoffMultiplier表示每次重试之前的 timeout 该乘以的因子。
+     * mCurrentTimeoutMs变量表示当前重试的 timeout 时间，会以mBackoffMultiplier作为因子累计前几次重试的 timeout。
      * @param error The error code of the last attempt.
      */
     @Override

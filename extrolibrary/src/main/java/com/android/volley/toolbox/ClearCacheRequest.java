@@ -16,16 +16,21 @@
 
 package com.android.volley.toolbox;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 
-import android.os.Handler;
-import android.os.Looper;
-
 /**
  * A synthetic request used for clearing the cache.
+ * 用于人为清空 Http 缓存的请求。
+ 添加到 RequestQueue 后能很快执行，因为优先级很高，为Priority.IMMEDIATE。并且清空缓存的方法mCache.clear()写在了isCanceled()方法体中，能最早的得到执行。
+
+ ClearCacheRequest 的写法不敢苟同，目前看来唯一的好处就是可以将清空缓存操作也当做一个请求。而在isCanceled()中做清空操作本身就造成了歧义，
+ 不看源码没人知道在NetworkDispatcher run 方法循环的过程中，isCanceled()这个读操作竟然做了可能造成缓存被清空。只能跟源码的解释一样当做一个 Hack 操作
  */
 public class ClearCacheRequest extends Request<Object> {
     private final Cache mCache;

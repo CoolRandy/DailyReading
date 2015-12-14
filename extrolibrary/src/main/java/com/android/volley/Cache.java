@@ -25,6 +25,7 @@ import java.util.Map;
 public interface Cache {
     /**
      * Retrieves an entry from the cache.
+     * 通过key获取请求的缓存实体
      * @param key Cache key
      * @return An {@link Entry} or null in the event of a cache miss
      */
@@ -32,6 +33,7 @@ public interface Cache {
 
     /**
      * Adds or replaces an entry to the cache.
+     * 存入一个请求的缓存实体
      * @param key Cache key
      * @param entry Data to store and metadata for cache coherency, TTL, etc.
      */
@@ -52,12 +54,14 @@ public interface Cache {
 
     /**
      * Removes an entry from the cache.
+     * 移除指定的缓存实体
      * @param key Cache key
      */
     public void remove(String key);
 
     /**
      * Empties the cache.
+     * 清空缓存
      */
     public void clear();
 
@@ -68,30 +72,30 @@ public interface Cache {
         /** The data returned from cache. */
         public byte[] data;
 
-        /** ETag for cache coherency. */
+        /** ETag for cache coherency. Http 响应首部中用于缓存新鲜度验证的 ETag*/
         public String etag;
 
-        /** Date of this response as reported by the server. */
+        /** Date of this response as reported by the server.Http 响应首部中的响应产生时间 */
         public long serverDate;
 
         /** The last modified date for the requested object. */
         public long lastModified;
 
-        /** TTL for this record. */
+        /** TTL for this record.缓存的过期时间 */
         public long ttl;
 
-        /** Soft TTL for this record. */
+        /** Soft TTL for this record. 缓存的新鲜时间*/
         public long softTtl;
 
-        /** Immutable response headers as received from server; must be non-null. */
+        /** Immutable response headers as received from server; must be non-null.响应的 Headers */
         public Map<String, String> responseHeaders = Collections.emptyMap();
 
-        /** True if the entry is expired. */
+        /** True if the entry is expired. 判断缓存是否过期，过期缓存不能继续使用*/
         public boolean isExpired() {
             return this.ttl < System.currentTimeMillis();
         }
 
-        /** True if a refresh is needed from the original data source. */
+        /** True if a refresh is needed from the original data source.判断缓存是否新鲜，不新鲜的缓存需要发到服务端做新鲜度的检测 */
         public boolean refreshNeeded() {
             return this.softTtl < System.currentTimeMillis();
         }

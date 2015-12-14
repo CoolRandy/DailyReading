@@ -138,7 +138,7 @@ public class CacheDispatcher extends Thread {
                 request.addMarker("cache-hit-parsed");
 
                 if (!entry.refreshNeeded()) {//不需要刷新，直接让Delivery处理
-                    //最终会触发如StringRequest这样的请求子类的onResponse或onErrorResponse， 解析完毕后就会调用ExecutorDelivery的postResponse()方法来回调解析出的数据
+                    //最终会触发如StringRequest这样的请求子类的onResponse或onErrorResponse， 解析完毕后就会调用mText的postResponse()方法来回调解析出的数据
                     // Completely unexpired cache hit. Just deliver the response.
                     mDelivery.postResponse(request, response);
                 } else {
