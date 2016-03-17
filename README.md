@@ -22,5 +22,5 @@ bitmap绘制：
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         return resizeBmp;
     }
-  ```Java
+ ``` 
 这里调用矩阵对象的postScale方法，传入的参数分别为：自定义view的宽与原始图片的宽的比值，以及自定义view的高与原始图片的高的比值，根据比值的大小进行缩放，从而避免图片不能充满view或者view不够显示的情况
