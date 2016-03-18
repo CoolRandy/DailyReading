@@ -156,6 +156,22 @@ public class MainFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        kanner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+
+                    case MotionEvent.ACTION_MOVE:
+                        ((MainContentActivity)getActivity()).getSrLayout().setEnabled(false);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        ((MainContentActivity)getActivity()).getSrLayout().setEnabled(true);
+                        break;
+                }
+                return false;
+            }
+        });
         //将headerView添加进listview
         listView.addHeaderView(headerView);
     }
