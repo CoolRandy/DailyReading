@@ -230,6 +230,7 @@ public class MainFragment extends BaseFragment {
                     Log.e("TAG", "请求数据为空");
                     return;
                 }
+
                 date = mLastedNewBean.getDate();
                 Log.e("TAG", "mLastedNewBean--->" + mLastedNewBean.getDate());
                 Log.e("TAG", "请求数据成功");
