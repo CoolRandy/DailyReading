@@ -4,6 +4,12 @@
     <string name="app_name">DailyReading</string>
     <string name="action_settings">Settings</string>
 
+    <string name="relax">放松一下</string>
+
     <string name="day_mode">日间模式</string>
     <string name="night_mode">夜间模式</string>
+    <string-array name="select_pic_mode">
+        <item>本地上传</item>
+        <item>照相机</item>
+    </string-array>
 </resources>

@@ -92,7 +92,8 @@ public class OtherNewsFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
+                //这里注意由于headview占据了第一个position，所以需要减一
+                position = position - 1;
                 StoryBean storyBean = storyBeanList.get(position);
                 if(!storyBean.isClicked()){
                     storyBean.setClicked(true);

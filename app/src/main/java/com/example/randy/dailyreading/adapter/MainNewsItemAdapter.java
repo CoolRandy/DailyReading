@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.example.randy.dailyreading.model.LastedNewBean;
 import com.example.randy.dailyreading.model.StoryBean;
 import com.example.randy.dailyreading.util.Utils;
 import com.example.randy.dailyreading.view.RippleView;
+import com.example.randy.dailyreading.view.RoundImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -100,7 +100,7 @@ public class MainNewsItemAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.main_news_item, viewGroup, false);
             holder.todayNewsTxt = (TextView)convertView.findViewById(R.id.tv_topic);
             holder.titleTxt = (TextView)convertView.findViewById(R.id.tv_title);
-            holder.newsImg = (ImageView)convertView.findViewById(R.id.iv_title);
+            holder.newsImg = (RoundImageView)convertView.findViewById(R.id.iv_title);
             holder.rippleView = (RippleView)convertView.findViewById(R.id.itemRippleView);
             convertView.setTag(holder);
         }else{
@@ -196,7 +196,7 @@ public class MainNewsItemAdapter extends BaseAdapter {
         //title
         TextView titleTxt;
         //picture
-        ImageView newsImg;
+        RoundImageView newsImg;
         //
         RippleView rippleView;
 

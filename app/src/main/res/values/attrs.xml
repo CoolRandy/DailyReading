@@ -56,5 +56,23 @@
         <attr name="numberProgressBarStyle" format="reference"/>
     </declare-styleable>
 
+    <!--RoundImageView-->
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" format="dimension"/>
+    </declare-styleable>
+    <!--CircleImageView-->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+    <!--自定义表盘view-->
+    <declare-styleable name="DialView">
+        <attr name="dial_border_color" format="color"/>
+        <attr name="dial_border_width" format="dimension"/>
+    </declare-styleable>
+
 
 </resources>

@@ -74,7 +74,7 @@ public class OtherNewsActivtiy extends AppCompatActivity{
         titleLayout = (RelativeLayout)findViewById(R.id.content_title);
         backLayout = (LinearLayout)findViewById(R.id.back_layout);
         favourite_iv = (ImageView)findViewById(R.id.icon_favourite);
-        //webview
+        //TODO 这里对webView的使用存在内存泄露的情况
         scrollWebView = (ScrollWebView)findViewById(R.id.scrollWebview);
     }
 

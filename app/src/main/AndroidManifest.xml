@@ -29,14 +29,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:label="@string/app_name"
-            android:name=".activity.HttpActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activity.DownloadActivity"/>
+        <activity android:name=".activity.DialViewActivity"/>
         <!--<activity android:name=".activity.SplashActivity"/>-->
         <activity android:label="@string/app_name"
             android:name=".activity.MainActivity"
@@ -54,7 +58,11 @@
             android:label="@string/app_name"/>
         <!--<activity android:name=".activity.SplashActivity"/>-->
         <activity android:name=".activity.CustomViewActivity"/>
-        <activity android:name=".activity.SplashActivity"/>
+        <activity android:name=".activity.HttpActivity"/>
+        <activity android:name=".activity.MusicPlayActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <!--ShareSDK-->
         <!--这里要注意app依赖于onekeyshare library,而onekeyshare则是依赖于sharesdk-->
         <activity
@@ -94,5 +102,9 @@
             android:name=".wxapi.WXEntryActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>-->
+
+        <service
+            android:enabled="true"
+            android:name=".activity.MusicPlayService"/>
     </application>
 </manifest>

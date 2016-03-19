@@ -1,6 +1,10 @@
 package com.example.randy.dailyreading.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -9,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.randy.dailyreading.R;
 import com.example.randy.dailyreading.activity.MainContentActivity;
@@ -22,6 +26,7 @@ import com.example.randy.dailyreading.model.ThemeBean;
 import com.example.randy.dailyreading.util.HttpUtils;
 import com.example.randy.dailyreading.util.UIUtil;
 import com.example.randy.dailyreading.util.Utils;
+import com.example.randy.dailyreading.view.CircleImageView;
 import com.google.gson.Gson;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -38,7 +43,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
 
     private LinearLayout ll_layout;
     private LinearLayout login_layout;
-    private ImageView login_iv;
+    private CircleImageView login_iv;
     private TextView login_tv;
     private TextView favourite_tv;
     private TextView download_tv;
@@ -55,6 +60,8 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
     private android.os.Handler handler = new android.os.Handler();
     //adapter
     private NewTypeAdapter newTypeAdapter;
+    //camera select
+    private static final int CAMERA_SELECT = 1;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +71,7 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
         ll_layout = (LinearLayout)view.findViewById(R.id.ll_menu);
         //login
         login_layout = (LinearLayout)view.findViewById(R.id.layout_login);
-        login_iv = (ImageView)view.findViewById(R.id.iv_login);
+        login_iv = (CircleImageView)view.findViewById(R.id.iv_login);
         login_tv = (TextView)view.findViewById(R.id.tv_login);
         login_layout.setOnClickListener(this);
         // favourite
@@ -105,6 +112,8 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
         //isLight = sp.getBoolean("isLight", true);
         isLight = Utils.getBooleanPreferences(mActivity, "isLight", true);
 
+        //TODO 从指定头像保存的位置获取一下，是否有指定图片，若有则读取并显示
+
         //请求数据
         UIUtil.showLoadingDialog(mActivity);
         HttpUtils.get(Constant.THEMES, new TextHttpResponseHandler() {
@@ -121,8 +130,9 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
                 if(null == responseString){
                     UIUtil.cancleLoadingDialog();
                     Log.e("TAG", "请求数据失败");
-                    return;
+                   return;
                 }
+                Log.e("TAG", "response= " + responseString);
                 themeBean = gson.fromJson(responseString, ThemeBean.class);
                 itemListBean = themeBean.getOthers();
                 handler.post(new Runnable() {
@@ -156,9 +166,62 @@ public class MenuFragment extends BaseFragment implements View.OnClickListener{
                 //((MainContentActivity)mActivity).setCurrID(itemListBean.get(position).getId() + "");
                 ((MainContentActivity)mActivity).closeDrawer();
                 break;
+            case R.id.layout_login:
+                //点击登录，跳转第三方登录，默认这里采用微信登录
+                //TODO 由于第三方登录需要审核缴费，所以这里只模拟添加头像1、从手机本地上传  2、调用照相机拍摄
+                showDialog();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 显示上传照片（头像）的dialog
+     */
+    private void showDialog(){
+        //避免直接实例化Dialog，一般选用AlertDialog
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setTitle("上传头像").setItems(R.array.select_pic_mode, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        Toast.makeText(getActivity(), "点击本地上传", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, CAMERA_SELECT);
+                        break;
+                    case 1:
+                        Toast.makeText(getActivity(), "点击照相机", Toast.LENGTH_SHORT).show();
+                        callPhoto();//调用相机
+                        break;
+                }
+            }
+        });
+        // 3. Get the AlertDialog from create()
+        AlertDialog dialog = builder.create();
+        // 4. show
+        dialog.show();
+    }
+
+    /**
+     * 设置头像
+     * @param bitmap
+     */
+    public void setImage(Bitmap bitmap){
+
+        login_iv.setImageBitmap(bitmap);
+    }
+
+
+    /**
+     * 调用相机
+     */
+    public void callPhoto(){
+
     }
 
     public class NewTypeAdapter extends BaseAdapter {

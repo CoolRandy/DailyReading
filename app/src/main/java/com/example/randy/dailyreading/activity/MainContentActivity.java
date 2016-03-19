@@ -1,8 +1,13 @@
 package com.example.randy.dailyreading.activity;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,6 +30,9 @@ import com.example.randy.dailyreading.fragment.MainFragment;
 import com.example.randy.dailyreading.fragment.MenuFragment;
 import com.example.randy.dailyreading.fragment.OtherNewsFragment;
 import com.example.randy.dailyreading.util.Utils;
+import com.example.randy.dailyreading.view.VpSwipeRefreshLayout;
+
+import java.io.FileNotFoundException;
 
 /**
  * Created by randy on 2015/10/16.
@@ -33,7 +41,7 @@ import com.example.randy.dailyreading.util.Utils;
 public class MainContentActivity extends AppCompatActivity {
 
     //SwipeRefreshLayout
-    private SwipeRefreshLayout srLayout;
+    private VpSwipeRefreshLayout srLayout;
     //content
     private FrameLayout content;
     //DrawerLayout
@@ -74,7 +82,7 @@ public class MainContentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setStatusBarColor(getResources().getColor(isLight ? R.color.light_toolbar : R.color.dark_toolbar));
         //初始化SwipeRefreshLayout
-        srLayout = (SwipeRefreshLayout)findViewById(R.id.sr_layout);
+        srLayout = (VpSwipeRefreshLayout)findViewById(R.id.sr_layout);
         //设置加载进度条的颜色
         srLayout.setColorSchemeResources(android.R.color.holo_blue_dark,
                 android.R.color.holo_green_dark,
@@ -195,6 +203,12 @@ public class MainContentActivity extends AppCompatActivity {
             ((MenuFragment)getSupportFragmentManager().findFragmentById(R.id.menu_fragment)).updateTheme();
             return true;
         }
+
+        if(id == R.id.action_relax){
+            //点击放松一下，跳转音乐播放界面
+            Intent intent = new Intent(MainContentActivity.this, MusicPlayActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -233,5 +247,25 @@ public class MainContentActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            Uri uri = data.getData();
+            Log.e("TAG", "uri: " + uri.toString());
+            ContentResolver cr = getContentResolver();
+            try{
+                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                //TODO 压缩处理
+                ((MenuFragment)getSupportFragmentManager().findFragmentById(R.id.menu_fragment)).setImage(bitmap);
+                //同时保存到sd卡或数据库
+
+
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
