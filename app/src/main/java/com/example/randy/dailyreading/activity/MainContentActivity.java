@@ -149,6 +149,10 @@ public class MainContentActivity extends AppCompatActivity {
                 .replace(R.id.content, new MainFragment(), LATEST_TAG).commit();
         currId = LATEST_TAG;
     }
+    
+    public SwipeRefreshLayout getSrLayout() {
+        return srLayout;
+    }
     /**
      * 网络加载请求数据，这一块是放在fragment中进行的
      */
