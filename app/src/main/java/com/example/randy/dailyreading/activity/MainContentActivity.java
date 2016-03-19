@@ -98,6 +98,7 @@ public class MainContentActivity extends AppCompatActivity {
                 srLayout.setRefreshing(false);
             }
         });
+
         //初始化content
         content = (FrameLayout)findViewById(R.id.content);
         //初始化DrawerLayout  这里会初始化调用MenuFragment
